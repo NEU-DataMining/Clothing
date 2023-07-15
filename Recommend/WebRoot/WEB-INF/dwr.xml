@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dwr>
+	<allow>
+	        <create creator="new" javascript="checkname">
+	                <param name="class" value="service.loginservice" />
+	        </create>
+	        <create creator="new" javascript="reg">
+			        <param name="class" value="service.registerservice" />
+		    </create>
+	       
+		    <convert converter="bean" match="bean.type"></convert>
+		    <convert converter="bean" match="bean.MyBean"></convert>
+		    
+	        <create creator="new" javascript="dos">
+			        <param name="class" value="service.recservice" />
+		    </create>
+		    
+		    <create creator="new" javascript="out">
+			<param name="class" value="service.logoutservice" />
+		</create>
+		    
+	</allow>
+</dwr>

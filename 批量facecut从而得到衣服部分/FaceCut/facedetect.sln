@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "facedetect", "facedetect\facedetect.vcxproj", "{78BEC927-5DCC-4BEA-A5D8-531D7790A64F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "颜色分布直方图", "..\..\颜色分布直方图\颜色分布直方图.vcxproj", "{9EA82AE6-FE67-43E8-81B6-0135C4A05827}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{78BEC927-5DCC-4BEA-A5D8-531D7790A64F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{78BEC927-5DCC-4BEA-A5D8-531D7790A64F}.Debug|Win32.Build.0 = Debug|Win32
+		{78BEC927-5DCC-4BEA-A5D8-531D7790A64F}.Release|Win32.ActiveCfg = Release|Win32
+		{78BEC927-5DCC-4BEA-A5D8-531D7790A64F}.Release|Win32.Build.0 = Release|Win32
+		{9EA82AE6-FE67-43E8-81B6-0135C4A05827}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9EA82AE6-FE67-43E8-81B6-0135C4A05827}.Debug|Win32.Build.0 = Debug|Win32
+		{9EA82AE6-FE67-43E8-81B6-0135C4A05827}.Release|Win32.ActiveCfg = Release|Win32
+		{9EA82AE6-FE67-43E8-81B6-0135C4A05827}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

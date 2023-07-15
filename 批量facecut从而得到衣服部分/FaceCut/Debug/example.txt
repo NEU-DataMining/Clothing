@@ -1,0 +1,82 @@
+#include "cv.h"
+#include "highgui.h"
+#include<iostream>
+using namespace std;
+
+/*加载分类器函数，通过调用cvLoad函数返回分类器级联*/
+CvHaarClassifierCascade* load_object_detector( const char* cascade_path )
+{
+return (CvHaarClassifierCascade*)cvLoad( cascade_path );
+}
+
+/*检测人脸并用矩形框框出人脸位置函数*/
+void detect_and_draw_objects( IplImage* image,
+                              CvHaarClassifierCascade* cascade,
+                              int do_pyramids )
+{
+    IplImage* small_image = image;
+    CvMemStorage* storage = cvCreateMemStorage(0);  //创建内存存储器用来存储检测到的一序列候选目标矩形框，storage指向这个内存。block_size为0时默认64K
+    CvSeq* faces;  //检测到的人脸序列
+    int i, scale = 1;
+
+    /* if the flag is specified, down-scale the 输入图像 to get a
+       performance boost w/o loosing quality (perhaps) */
+    if( do_pyramids )
+    {
+        small_image = cvCreateImage( cvSize(image->width/2,image->height/2),IPL_DEPTH_8U, 3 );
+        cvPyrDown( image, small_image, CV_GAUSSIAN_5x5 );
+        scale = 2;
+    }
+
+    /* use the fastest variant */
+    faces = cvHaarDetectObjects( small_image, cascade, storage, 1.2, 2,
+                                                                CV_HAAR_DO_CANNY_PRUNING ,cvSize(20,20));
+
+        cout<<"检测到的人脸个数为："<<faces->total<<endl;  //输出检测到的人脸个数
+    /* draw all the rectangles */
+    for( i = 0; i < faces->total; i++ )
+    {
+        /* extract the rectanlges only */
+        CvRect face_rect = *(CvRect*)cvGetSeqElem( faces, i ); //从faces人脸序列中取出第i个人脸
+        cvRectangle( image, cvPoint(face_rect.x*scale,face_rect.y*scale),
+                     cvPoint((face_rect.x+face_rect.width)*scale,
+                             (face_rect.y+face_rect.height)*scale),
+                                                         CV_RGB(0,255,255), 3 );
+    }
+
+    if( small_image != image )
+        cvReleaseImage( &small_image );
+    cvReleaseMemStorage( &storage );
+}
+
+/* takes image filename and cascade path from the command line*/ 
+int main( int argc, char** argv )
+{
+    IplImage* image;                                                 //这种方法不会，求指导！
+        if( argc==3 && (image = cvLoadImage( argv[1], 1 )) != 0 )
+        {
+                CvHaarClassifierCascade* cascade = load_object_detector(argv[2]);
+                detect_and_draw_objects( image, cascade, 1 );
+                cvNamedWindow( "test", 0 );
+                cvShowImage( "test", image );
+                cvWaitKey(0);
+                cvReleaseHaarClassifierCascade( &cascade );
+                cvReleaseImage( &image );
+        }
+
+        /*                                      //这样没有什么问题
+        image = cvLoadImage( "renlian.jpg", 1);
+        //把前脸检测分类器地址赋给cascadeName
+        const char *cascadeName="D:\\Opencv2.4.2\\data\\haarcascades\\haarcascade_frontalface_alt2.xml";
+        CvHaarClassifierCascade *cascade=load_object_detector(cascadeName);
+    detect_and_draw_objects( image, cascade, 1 );
+    cvNamedWindow( "test", 0 );
+    cvShowImage( "test", image );
+    cvWaitKey(0);
+    cvReleaseHaarClassifierCascade( &cascade );
+    cvReleaseImage( &image );
+    cvDestroyAllWindows();
+        */
+
+    return 0;
+}
